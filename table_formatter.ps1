@@ -1,20 +1,20 @@
 $s = Get-Clipboard
-$num = $s[0].length - $s[0].replace("`t", "").length+1
+$num = $s[0].Length - $s[0].Replace("`t", "").Length+1
 if([String]::IsNullOrEmpty($s)){
-	[reflection.assembly]::loadwithpartialname('System.Windows.Forms')
-	[reflection.assembly]::loadwithpartialname('System.Drawing')
-	$notify = new-object system.windows.forms.notifyicon
-	$notify.icon = [System.Drawing.SystemIcons]::Exclamation
-	$notify.visible = $true
-	$notify.showballoontip(1,'TableFormatter','The text on the clipboard cannot be converted into the markdown table.',[system.windows.forms.tooltipicon]::None)
+	[Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms')
+	[Reflection.Assembly]::LoadWithPartialName('System.Drawing')
+	$notify = New-Object System.Windows.Forms.Notifyicon
+	$notify.Icon = [System.Drawing.SystemIcons]::Exclamation
+	$notify.Visible = $true
+	$notify.ShowBalloonTip(1,'TableFormatter','The text on the clipboard cannot be converted into the markdown table.',[system.windows.forms.tooltipicon]::None)
 	exit
 }
 if($s.GetType().BaseType.Name -eq "Array" -and ($num) -gt 1){
-	for($i = 0; $i -lt $s.length - 1; $i ++){
-		$s[$i] ="| " + $s[$i].replace("`t", " | ") + " |"
+	for($i = 0; $i -lt $s.Length - 1; $i ++){
+		$s[$i] ="| " + $s[$i].Replace("`t", " | ") + " |"
 		if($s[$i].Contains("`"")){
-			$s[$i] = $s[$i].replace("`n", " <br> ")
-			$s[$i] = $s[$i].replace("`"", "")
+			$s[$i] = $s[$i].Replace("`n", " <br> ")
+			$s[$i] = $s[$i].Replace("`"", "")
 		}
 	}
 
@@ -26,22 +26,22 @@ if($s.GetType().BaseType.Name -eq "Array" -and ($num) -gt 1){
 	$answer = @()
 	$answer += $s[0]
 	$answer += $head
-	for($i = 1; $i -lt $s.length; $i ++){
+	for($i = 1; $i -lt $s.Length; $i ++){
 		$answer += $s[$i]
 	}
-	set-Clipboard -value $answer
-	[reflection.assembly]::loadwithpartialname('System.Windows.Forms')
-	[reflection.assembly]::loadwithpartialname('System.Drawing')
-	$notify = new-object system.windows.forms.notifyicon
-	$notify.icon = [System.Drawing.SystemIcons]::Information
-	$notify.visible = $true
-	$notify.showballoontip(1,'TableFormatter','The table on the clipboard has been converted into the markdown style.',[system.windows.forms.tooltipicon]::None)
+	Set-Clipboard -Value $answer
+	[Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms')
+	[Reflection.Assembly]::LoadWithPartialName('System.Drawing')
+	$notify = New-Object System.Windows.Forms.Notifyicon
+	$notify.Icon = [System.Drawing.SystemIcons]::Information
+	$notify.Visible = $true
+	$notify.ShowBalloonTip(1,'TableFormatter','The table on the clipboard has been converted into the markdown style.',[system.windows.forms.tooltipicon]::None)
 }else{
-	[reflection.assembly]::loadwithpartialname('System.Windows.Forms')
-	[reflection.assembly]::loadwithpartialname('System.Drawing')
-	$notify = new-object system.windows.forms.notifyicon
-	$notify.icon = [System.Drawing.SystemIcons]::Exclamation
-	$notify.visible = $true
-	$notify.showballoontip(1,'TableFormatter','The text on the clipboard cannot be converted into the markdown table.',[system.windows.forms.tooltipicon]::None)
+	[Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms')
+	[Reflection.Assembly]::LoadWithPartialName('System.Drawing')
+	$notify = New-Object System.Windows.Forms.Notifyicon
+	$notify.Icon = [System.Drawing.SystemIcons]::Exclamation
+	$notify.Visible = $true
+	$notify.ShowBalloonTip(1,'TableFormatter','The text on the clipboard cannot be converted into the markdown table.',[system.windows.forms.tooltipicon]::None)
 }
 exit
